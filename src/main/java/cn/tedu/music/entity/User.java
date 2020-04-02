@@ -1,13 +1,18 @@
 package cn.tedu.music.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Objects;
 
 /**
  * 用户数据的实体类
  */
 public class User extends BaseEntity{
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private Integer uid;
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private String username;
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private String password;
     private String salt;
     private Integer gender;

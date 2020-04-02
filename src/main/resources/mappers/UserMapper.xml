@@ -21,17 +21,34 @@
 	<select id="findUserByUsername"
 		resultType="cn.tedu.music.entity.User">
 		SELECT
-			uid,username,password,salt,gender,phone,email,avatar,is_deleted
-			isDeleted,create_user createUser,create_time createTime,modified_user
-			modifiedUser,modified_time modeifiedTime
+			uid,username,password,salt,is_deleted isDeleted
 		FROM
 			user
 		WHERE
 			username=#{username}
-
 	</select>
 
+	<!--根据ID查找用户信息  包括密码 盐值 是否标记删除-->
+	<select id="findById" resultType="cn.tedu.music.entity.User">
+		SELECT
+			password,salt,is_deleted isDeleted
+		FROM
+			user
+		WHERE
+			uid=#{uid}
+	</select>
 
+	<!--修改密码-->
+	<update id="updatePassword">
+		UPDATE
+			user
+		SET
+			password=#{password},
+			modified_user=#{modifiedUser},
+			modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+	</update>
 </mapper>
 
 
