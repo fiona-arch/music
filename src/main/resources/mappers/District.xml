@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace对应的是那个接口 -->
+<mapper namespace="cn.tedu.music.mapper.AddressMapper">
+
+	<!-- Integer countByUid(Integer uid);-->
+	<select id="countByUid" resultType="java.lang.Integer">
+		SELECT
+			count(uid)
+		FROM
+			t_address
+		WHERE
+			uid=#{uid}
+	</select>
+
+	<!-- Integer insert(Address address);-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="aid">
+		INSERT INTO
+		 	t_address(
+		 	uid,name,
+		 	province_code,province_name,
+		 	city_code,city_name,
+			area_code,area_name,
+			address,zip,
+			phone,tel,
+			tag,is_default,
+			create_user,create_time,
+			modified_user,modified_time)
+		VALUES(
+			#{uid},#{name},
+			#{provinceCode},#{provinceName},
+			#{cityCode},#{cityName},
+			#{areaCode},#{areaName},
+			#{address},#{zip},
+			#{phone},#{tel},
+			#{tag},#{isDefault},
+			#{createUser},#{createTime},
+			#{modifiedUser},#{modifiedTime}
+			)
+	</insert>
+
+</mapper>
+
+

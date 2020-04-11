@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace对应的是那个接口 -->
+<mapper namespace="cn.tedu.music.mapper.UserMapper">
+
+
+	<!-- 插入用户数据 -->
+	<!-- Integer insert(User user); -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+		INSERT INTO
+		user(
+		username,password,salt,gender,phone,email,avatar,is_deleted,create_user,create_time,modified_user,modified_time)
+		VALUES(
+		#{username},#{password},#{salt},#{gender},#{phone},#{email},#{avatar},#{isDeleted},#{createUser},#{createTime},#{modifiedUser},#{modifiedTime}
+		)
+	</insert>
+
+	<!--	根据用户名查询用户数据 -->
+	<!--User findUserByUsername(String username); -->
+	<select id="findUserByUsername"
+		resultType="cn.tedu.music.entity.User">
+		SELECT
+			uid,username,password,salt,is_deleted isDeleted
+		FROM
+			user
+		WHERE
+			username=#{username}
+	</select>
+
+	<!--根据ID查找用户信息  包括密码 盐值 是否标记删除-->
+	<select id="findById" resultType="cn.tedu.music.entity.User">
+		SELECT
+			uid,username,password,salt,is_deleted isDeleted,phone,email,gender
+		FROM
+			user
+		WHERE
+			uid=#{uid}
+	</select>
+
+	<!--修改密码-->
+	<update id="updatePassword">
+		UPDATE
+			user
+		SET
+			password=#{password},
+			modified_user=#{modifiedUser},
+			modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+	</update>
+
+	<!-- Integer updateInfo(User user)-->
+	<update id="updateInfo">
+		UPDATE
+			user
+		SET
+			phone=#{phone},email=#{email},gender=#{gender},
+			modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+	</update>
+
+	<!-- Integer updateAvatar(@Param("avatar") String avatar,@Param("modifiedUser") String modifiedUser,
+                         @Param("modifiedTime") String modifiedTime,@Param("uid")Integer uid);-->
+	<update id="updateAvatar">
+		UPDATE
+			user
+		SET
+			avatar=#{avatar},modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+
+	</update>
+</mapper>
+
+
