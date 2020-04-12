@@ -3,7 +3,9 @@ package cn.tedu.music.UserMapper;
 import cn.tedu.music.entity.User;
 import cn.tedu.music.mapper.UserMapper;
 import cn.tedu.music.service.IUserService;
+import cn.tedu.music.service.ex.NullUserException;
 import cn.tedu.music.service.ex.ServiceException;
+import cn.tedu.music.service.ex.UpdateException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,6 +79,56 @@ public class TestCase {
            service.changePassword(1,"root","1234","4321");
             System.err.println("测试完了");
         }catch (ServiceException e){
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateInfo(){
+        User user=new User();
+        user.setUid(6);
+        user.setPhone("15800380003");
+        user.setEmail("158858@qq.com");
+        user.setGender(0);
+        Integer rows=userMapper.updateInfo(user);
+        System.err.println(rows);
+    }
+
+    @Test
+    public void testChangeInfo(){
+        try {
+            User user=new User();
+            user.setUid(8);
+            user.setPhone("15800380003");
+            user.setEmail("158858@qq.com");
+            user.setGender(1);
+            service.changeInfo(user);
+        } catch (NullUserException e) {
+            System.err.println(e.getMessage());
+        } catch (UpdateException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+    @Test
+    public void testUpdateAvatar(){
+        Date now=new Date();
+        Integer rows=userMapper.updateAvatar("这是一个头像","root",now,6);
+        System.err.println(rows);
+    }
+
+    @Test
+    public void testChangeAvatar(){
+        try {
+            String username="秦始皇";
+            Integer uid=33;
+            String avatar="又是一个头像";
+            service.changeAvatar(uid,username,avatar);
+            System.err.println("OK");
+        } catch (NullUserException e) {
+            System.err.println(e.getMessage());
+        } catch (UpdateException e) {
             System.err.println(e.getMessage());
         }
     }

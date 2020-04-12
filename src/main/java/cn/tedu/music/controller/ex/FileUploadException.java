@@ -1,4 +1,4 @@
-package cn.tedu.music.service.ex;
+package cn.tedu.music.controller.ex;
 
 public class FileUploadException extends RuntimeException{
     public FileUploadException() {

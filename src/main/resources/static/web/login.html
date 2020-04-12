@@ -155,13 +155,15 @@
 				"success":function(json){
 					if(json.state==2000){
 						alert("登录成功");
+
+						//相关数据存储到哦cookie
+						$.cookie("avatar",json.data.avatar,{expires:7});
 					}else {
 						alert(json.message)
 					}
 				}
 			})
 		})
-
 
 	})
 

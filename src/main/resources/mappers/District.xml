@@ -2,44 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <!-- namespace对应的是那个接口 -->
-<mapper namespace="cn.tedu.music.mapper.AddressMapper">
+<mapper namespace="cn.tedu.music.mapper.DistrictMapper">
 
-	<!-- Integer countByUid(Integer uid);-->
-	<select id="countByUid" resultType="java.lang.Integer">
+	<!-- List<District> findByParent(String parent);-->
+	<select id="findByParent" resultType="cn.tedu.music.entity.District">
 		SELECT
-			count(uid)
+			parent,code,name
 		FROM
-			t_address
+			t_dict_district
 		WHERE
-			uid=#{uid}
+			parent=#{parent}
+		ORDER BY
+			id
 	</select>
 
-	<!-- Integer insert(Address address);-->
-	<insert id="insert" useGeneratedKeys="true" keyProperty="aid">
-		INSERT INTO
-		 	t_address(
-		 	uid,name,
-		 	province_code,province_name,
-		 	city_code,city_name,
-			area_code,area_name,
-			address,zip,
-			phone,tel,
-			tag,is_default,
-			create_user,create_time,
-			modified_user,modified_time)
-		VALUES(
-			#{uid},#{name},
-			#{provinceCode},#{provinceName},
-			#{cityCode},#{cityName},
-			#{areaCode},#{areaName},
-			#{address},#{zip},
-			#{phone},#{tel},
-			#{tag},#{isDefault},
-			#{createUser},#{createTime},
-			#{modifiedUser},#{modifiedTime}
-			)
-	</insert>
+	<!--District findByCode(Integer code);-->
 
+	<select id="findByCode" resultType="cn.tedu.music.entity.District">
+		SELECT
+			name
+		FROM
+			t_dict_district
+		WHERE
+			code=#{code}
+	</select>
 </mapper>
 
 

@@ -43,4 +43,21 @@ public interface UserMapper {
                            @Param("password") String password,
                            @Param("modifiedUser") String modifiedUser,
                            @Param("modifiedTime")Date modifiedTime);
+
+    /**
+     * 修改用户信息 包含phone,email,gender
+     * @param user
+     * @return 1代表修改成功  否则代表修改失败
+     */
+    Integer updateInfo(User user);
+
+    /**
+     * 根据id修改头像
+     * @param avatar
+     * @param modifiedUser
+     * @param modifiedTime
+     * @return 1代表修改成功  0代表修改失败
+     */
+    Integer updateAvatar(@Param("avatar") String avatar,@Param("modifiedUser") String modifiedUser,
+                         @Param("modifiedTime") Date modifiedTime,@Param("uid")Integer uid);
 }

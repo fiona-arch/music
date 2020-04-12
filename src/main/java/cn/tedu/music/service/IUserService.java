@@ -1,5 +1,6 @@
 package cn.tedu.music.service;
 
+import cn.tedu.music.entity.Address;
 import cn.tedu.music.entity.User;
 import cn.tedu.music.service.ex.*;
 
@@ -31,4 +32,30 @@ public interface IUserService {
      * @param newPassword
      */
     void changePassword(Integer uid,String username,String oldPassword,String newPassword)throws NullUserException,WrongPasswordException, UpdateException;
+
+    /**
+     * 根据id得到用户相关信息
+     * @param uid
+     * @return 用户信息包含Username,password,salt,isDeleted,phone,email
+     */
+    User getById(Integer uid);
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    void changeInfo(User user) throws NullUserException,UpdateException;
+
+    /**
+     * 修改头像
+     * @param uid
+     * @param username
+     * @param avatar
+     * @throws NullUserException
+     * @throws UpdateException
+     */
+    void changeAvatar(Integer uid,String username,String avatar) throws NullUserException,UpdateException;
+
+
+
 }

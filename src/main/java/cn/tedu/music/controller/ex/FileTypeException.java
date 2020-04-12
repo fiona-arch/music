@@ -1,4 +1,4 @@
-package cn.tedu.music.service.ex;
+package cn.tedu.music.controller.ex;
 
 public class FileTypeException extends FileUploadException{
     public FileTypeException() {

@@ -21,7 +21,7 @@
 	<select id="findUserByUsername"
 		resultType="cn.tedu.music.entity.User">
 		SELECT
-			uid,username,password,salt,is_deleted isDeleted
+			uid,username,password,salt,is_deleted isDeleted,avatar
 		FROM
 			user
 		WHERE
@@ -31,7 +31,7 @@
 	<!--根据ID查找用户信息  包括密码 盐值 是否标记删除-->
 	<select id="findById" resultType="cn.tedu.music.entity.User">
 		SELECT
-			password,salt,is_deleted isDeleted
+			uid,username,password,salt,is_deleted isDeleted,phone,email,gender,avatar
 		FROM
 			user
 		WHERE
@@ -48,6 +48,29 @@
 			modified_time=#{modifiedTime}
 		WHERE
 			uid=#{uid}
+	</update>
+
+	<!-- Integer updateInfo(User user)-->
+	<update id="updateInfo">
+		UPDATE
+			user
+		SET
+			phone=#{phone},email=#{email},gender=#{gender},
+			modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+	</update>
+
+	<!-- Integer updateAvatar(@Param("avatar") String avatar,@Param("modifiedUser") String modifiedUser,
+                         @Param("modifiedTime") String modifiedTime,@Param("uid")Integer uid);-->
+	<update id="updateAvatar">
+		UPDATE
+			user
+		SET
+			avatar=#{avatar},modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+
 	</update>
 </mapper>
 

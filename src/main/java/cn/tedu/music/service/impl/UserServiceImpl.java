@@ -7,12 +7,10 @@ import cn.tedu.music.service.ex.NullUserException;
 import cn.tedu.music.service.ex.UpdateException;
 import cn.tedu.music.service.ex.UsernameDuplicateException;
 import cn.tedu.music.service.ex.WrongPasswordException;
-import org.apache.tomcat.util.digester.Digester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,7 +41,7 @@ public class UserServiceImpl implements IUserService {
         user.setCreateUser(username);
         Date date=new Date();
         user.setCreateTime(date);
-        user.setModifiesUser(username);
+        user.setModifiedUser(username);
         user.setModifiedTime(date);
 
         //插入用户对象
@@ -105,7 +103,68 @@ public class UserServiceImpl implements IUserService {
         //新密码加密
         String newMd5Password=getMd5Password(newPassword,salt);
         Date now=new Date();
-        userMapper.updatePassword(uid,newMd5Password,username,now);
+        Integer rows=userMapper.updatePassword(uid,newMd5Password,username,now);
+        if (rows != 1) {
+            // 抛出：UpdateException
+            throw new UpdateException(
+                    "修改密码失败！更新密码时出现未知错误！");
+        }
+
+    }
+
+    @Override
+    public User getById(Integer uid) {
+        User user=userMapper.findById(uid);
+        if(user!=null){
+            user.setPassword(null);
+            user.setSalt(null);
+            user.setIsDeleted(null);
+        }
+        return user;
+    }
+
+    @Override
+    public void changeInfo(User user) throws NullUserException, UpdateException {
+        //获取用户id
+        Integer uid=user.getUid();
+        //根据id查找用户对象
+        User result=userMapper.findById(uid);
+        //用户不存在抛出异常
+        if(result==null){
+            throw new NullUserException("修改失败!用户不存在");
+        }
+        //用户被删除抛出异常
+        if(result.getIsDeleted()!=0){
+            throw new NullUserException("修改失败!用户不存在");
+        }
+        //设置修改人和修改时间
+        user.setModifiedUser(user.getUsername());
+        Date now=new Date();
+        user.setModifiedTime(now);
+        //执行修改
+        Integer rows=userMapper.updateInfo(user);
+        //结果不为1抛出异常
+        if(rows!=1){
+            throw new UpdateException("修改失败!发生了未知错误,请联系系统管理员解决");
+        }
+    }
+
+    @Override
+    public void changeAvatar(Integer uid, String username, String avatar) throws NullUserException, UpdateException {
+        User user=userMapper.findById(uid);
+        if(user==null){
+            throw new NullUserException("修改失败!用户不存在");
+        }
+
+        if(user.getIsDeleted()==1){
+            throw new NullUserException("修改失败!用户不存在");
+        }
+        Date now=new Date();
+        Integer rows=userMapper.updateAvatar(avatar,username,now,uid);
+        if(rows!=1){
+            throw new UpdateException("修改失败!发生了未知错误,请联系系统管理员解决");
+        }
+
     }
 
 

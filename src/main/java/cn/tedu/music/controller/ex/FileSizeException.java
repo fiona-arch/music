@@ -1,4 +1,5 @@
-package cn.tedu.music.service.ex;
+package cn.tedu.music.controller.ex;
+
 
 public class FileSizeException extends FileUploadException{
     public FileSizeException() {

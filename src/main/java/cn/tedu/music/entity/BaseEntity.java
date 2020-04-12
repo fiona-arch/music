@@ -29,12 +29,12 @@ class BaseEntity implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getModifiesUser() {
+    public String getModifiedUser() {
         return modifiedUser;
     }
 
-    public void setModifiesUser(String modifiesUser) {
-        this.modifiedUser = modifiesUser;
+    public void setModifiedUser(String modifiedUser) {
+        this.modifiedUser = modifiedUser;
     }
 
     public Date getModifiedTime() {
