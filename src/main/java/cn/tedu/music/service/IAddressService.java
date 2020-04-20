@@ -1,8 +1,7 @@
 package cn.tedu.music.service;
 
 import cn.tedu.music.entity.Address;
-import cn.tedu.music.service.ex.AddressCountLimitException;
-import cn.tedu.music.service.ex.InsertException;
+import cn.tedu.music.service.ex.*;
 
 import java.util.List;
 
@@ -27,4 +26,26 @@ public interface IAddressService {
      * @return
      */
     List<Address> getByUid(Integer uid);
+
+    /**
+     * 将地址设为默认
+     * @param aid 用户选择的地址
+     * @param uid 用户地址
+     * @param username 用户名
+     * @throws AddressNotFoundException 地址不存在
+     * @throws AddressDeniedException 拒绝修改他人信息
+     * @throws UpdateException 更新失败
+     */
+    void setDefault(Integer aid,Integer uid,String username) throws AddressNotFoundException,AddressDeniedException, UpdateException;
+
+    /**
+     * 删除地址
+     * @param aid
+     * @param uid
+     * @param username
+     * @throws AddressNotFoundException
+     * @throws AddressDeniedException
+     * @throws DeleteException 删除失败
+     */
+    void delete(Integer aid,Integer uid,String username)throws AddressNotFoundException,AddressDeniedException,DeleteException;
 }

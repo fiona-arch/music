@@ -4,6 +4,65 @@
 <!-- namespace对应的是那个接口 -->
 <mapper namespace="cn.tedu.music.mapper.AddressMapper">
 
+	<!-- Integer insert(Address address);-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="aid">
+		INSERT INTO
+		 	t_address(
+		 	uid,name,
+		 	province_code,province_name,
+		 	city_code,city_name,
+			area_code,area_name,
+			address,zip,
+			phone,tel,
+			tag,is_default,
+			create_user,create_time,
+			modified_user,modified_time)
+		VALUES(
+			#{uid},#{name},
+			#{provinceCode},#{provinceName},
+			#{cityCode},#{cityName},
+			#{areaCode},#{areaName},
+			#{address},#{zip},
+			#{phone},#{tel},
+			#{tag},#{isDefault},
+			#{createUser},#{createTime},
+			#{modifiedUser},#{modifiedTime}
+			)
+	</insert>
+
+
+	<!--Integer deleteByAid(Integer aid);-->
+	<delete id="deleteByAid">
+		DELETE FROM
+			t_address
+		WHERE
+			aid=#{aid}
+	</delete>
+
+
+	<!--Integer updateNonDefault(Integer uid);-->
+	<update id="updateNonDefault">
+		UPDATE
+			t_address
+		SET
+			is_default=0
+		WHERE
+			uid=#{uid};
+	</update>
+
+
+	<!--Integer updateDefault(Integer aid);-->
+	<update id="updateDefault">
+		UPDATE
+			t_address
+		SET
+			is_default=1,modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			aid=#{aid};
+	</update>
+
+
+
 	<!-- Integer countByUid(Integer uid);-->
 	<select id="countByUid" resultType="java.lang.Integer">
 		SELECT
@@ -31,35 +90,30 @@
 		DESC ,
 			modified_time
 		DESC
-
 	</select>
 
-	<!-- Integer insert(Address address);-->
-	<insert id="insert" useGeneratedKeys="true" keyProperty="aid">
-		INSERT INTO
-		 	t_address(
-		 	uid,name,
-		 	province_code,province_name,
-		 	city_code,city_name,
-			area_code,area_name,
-			address,zip,
-			phone,tel,
-			tag,is_default,
-			create_user,create_time,
-			modified_user,modified_time)
-		VALUES(
-			#{uid},#{name},
-			#{provinceCode},#{provinceName},
-			#{cityCode},#{cityName},
-			#{areaCode},#{areaName},
-			#{address},#{zip},
-			#{phone},#{tel},
-			#{tag},#{isDefault},
-			#{createUser},#{createTime},
-			#{modifiedUser},#{modifiedTime}
-			)
-	</insert>
+	<!--Address findByAid(Integer aid);-->
+	<select id="findByAid" resultType="cn.tedu.music.entity.Address">
+		SELECT
+			uid,is_default isDefault
+		FROM
+			t_address
+		WHERE
+			aid=#{aid}
+	</select>
 
+	<!-- Integer findLastModifiedAddress(Integer uid);-->
+	<select id="findLastModifiedAddress" resultType="cn.tedu.music.entity.Address">
+		SELECT
+			aid
+		FROM
+			t_address
+		WHERE
+			uid=#{uid}
+		ORDER BY
+			modified_time
+		DESC LIMIT 0,1
+	</select>
 </mapper>
 
 

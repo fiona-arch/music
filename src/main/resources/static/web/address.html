@@ -292,9 +292,10 @@
 										"\t\t\t\t\t\t\t\t\t<td>#{address}</td>\n" +
 										"\t\t\t\t\t\t\t\t\t<td>#{phone}</td>\n" +
 										"\t\t\t\t\t\t\t\t\t<td><a class=\"btn btn-xs btn-info\"><span class=\"fa fa-edit\"></span> 修改</a></td>\n" +
-										"\t\t\t\t\t\t\t\t\t<td><a class=\"btn btn-xs add-del btn-info\"><span class=\"fa fa-trash-o\"></span> 删除</a></td>\n" +
-										"\t\t\t\t\t\t\t\t\t<td><a class=\"btn btn-xs add-def btn-default\">设为默认</a></td>\n" +
+										"\t\t\t\t\t\t\t\t\t<td><a onclick='deleteByAid(#{aid})' class=\"btn btn-xs add-del btn-info\"><span class=\"fa fa-trash-o\"></span> 删除</a></td>\n" +
+										"\t\t\t\t\t\t\t\t\t<td><a onclick='setDefault(#{aid})' class=\"btn btn-xs add-def btn-default\">设为默认</a></td>\n" +
 										"\t\t\t\t\t\t\t\t</tr>";
+								html=html.replace(/#{aid}/g,list[i].aid);
 								html=html.replace("#{tag}",list[i].tag);
 								html=html.replace("#{name}",list[i].name);
 								html=html.replace("#{address}",list[i].provinceName+list[i].cityName+list[i].areaName+list[i].address);
@@ -308,6 +309,41 @@
 					}
 				})
 			}
+			function setDefault(aid){
+				$.ajax({
+					"url":"/addresses/"+aid+"/set_default",
+					"type":"get",
+					"dataType":"json",
+					"success":function(json){
+						if(json.state==2000){
+							showAddressList();
+						}else{
+							alert(json.message)
+						}
+					},
+					"error":function(){
+						alert("您的登录信息已经过期,请重新登录")
+					}
+				})
 
+			}
+			function deleteByAid(aid){
+				$.ajax({
+					"url":"/addresses/"+aid+"/delete",
+					"type":"get",
+					"dataType":"json",
+					"success":function(json){
+						if(json.state==2000){
+							showAddressList();
+						}else{
+							alert(json.message)
+						}
+					},
+					"error":function(){
+						alert("您的登录信息已经过期,请重新登录")
+					}
+				})
+
+			}
 	</script>
 </html>
