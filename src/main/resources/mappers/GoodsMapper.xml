@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace对应的是那个接口 -->
+<mapper namespace="cn.tedu.music.mapper.GoodsMapper">
+    <!--List<Goods> findHotList();-->
+    <select id="findHotList" resultType="cn.tedu.music.entity.Goods">
+        SELECT
+            id,image,title,price
+        FROM
+            t_goods
+        WHERE
+            num>100
+        AND
+            status=1
+        ORDER BY
+            priority
+        DESC LIMIT 0,4
+    </select>
+
+    <!--List<Goods> findNewArrive(); -->
+    <select id="findNewArrive" resultType="cn.tedu.music.entity.Goods">
+        SELECT
+            id,image,title,price
+        FROM
+            t_goods
+        WHERE
+            num>100
+        AND
+            status=1
+        ORDER BY
+           created_time
+        DESC LIMIT 0,4
+    </select>
+
+    <!-- Goods findById(Long id);-->
+    <select id="findById" resultType="cn.tedu.music.entity.Goods">
+        SELECT
+            title,sell_point sellPoint,
+            image,num,status
+        FROM
+            t_goods
+        WHERE
+            id=#{id}
+    </select>
+</mapper>
+
+

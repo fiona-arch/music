@@ -19,6 +19,7 @@ public class LoginInterceptorConfigurer implements WebMvcConfigurer {
         List<String> encludepaths=new ArrayList<>();
         encludepaths.add("/web/register.html");
         encludepaths.add("/web/login.html");
+        encludepaths.add("/web/index.html");
         encludepaths.add("/users/reg");
         encludepaths.add("/users/login");
         encludepaths.add("/bootstrap3/**");
@@ -26,6 +27,7 @@ public class LoginInterceptorConfigurer implements WebMvcConfigurer {
         encludepaths.add("/images/**");
         encludepaths.add("/js/**");
         encludepaths.add("/districts/");
+        encludepaths.add("/goods/**");
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(encludepaths);
 
 
