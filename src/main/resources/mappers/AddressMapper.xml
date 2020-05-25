@@ -95,7 +95,10 @@
 	<!--Address findByAid(Integer aid);-->
 	<select id="findByAid" resultType="cn.tedu.music.entity.Address">
 		SELECT
-			uid,is_default isDefault
+			uid,is_default isDefault,
+			name,phone,province_name provinceName,
+			city_name cityName,area_name areaName,
+			address
 		FROM
 			t_address
 		WHERE

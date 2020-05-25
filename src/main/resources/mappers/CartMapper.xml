@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace对应的是那个接口 -->
+<mapper namespace="cn.tedu.music.mapper.CartMapper">
+	<!-- Integer insert(Cart cart);-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="cid">
+		INSERT INTO
+			t_cart(
+			uid,gid,num,
+			create_user,create_time,
+			modified_user,modified_time
+			)
+		VALUE (
+			#{uid},#{gid},#{num},
+			#{createUser},#{createTime},
+			#{modifiedUser},#{modifiedTime}
+		)
+	</insert>
+
+	<!-- Integer updateNum-->
+	<update id="updateNum">
+		UPDATE
+			t_cart
+		SET
+			num=#{num},
+			modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+		WHERE
+			cid=#{cid}
+	</update>
+
+	<!--Cart findByUidAndGid-->
+	<select id="findByUidAndGid" resultType="cn.tedu.music.entity.Cart">
+		SELECT
+			cid,num
+		FROM
+			t_cart
+		WHERE
+			uid=#{uid}
+		AND
+			gid=#{gid}
+	</select>
+
+	<!--Cart findByCid(Integer cid);-->
+	<select id="findByCid" resultType="cn.tedu.music.entity.Cart">
+		SELECT
+			uid,num
+		FROM
+			t_cart
+		WHERE
+			cid=#{cid}
+	</select>
+
+	<!-- CartVO findByCids(Integer []cids);-->
+	<select id="findByCids" resultType="cn.tedu.music.entity.CartVO">
+		SELECT
+			cid,uid,gid,title,price,image,c.num
+		FROM
+			t_cart c
+		LEFT JOIN
+			t_goods g
+		ON
+			c.gid=g.id
+		WHERE
+			cid
+		IN
+			(
+				<foreach collection="array" separator="," item="cid">
+					#{cid}
+				</foreach>
+
+			);
+	</select>
+</mapper>
+
+

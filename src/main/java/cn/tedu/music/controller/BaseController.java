@@ -69,7 +69,7 @@ public class BaseController {
             result.setState(6005);
         }else if(e instanceof AddressNotFoundException){
             result.setState(6006);
-        }else if(e instanceof AddressDeniedException){
+        }else if(e instanceof AccessDeniedException){
             result.setState(6007);
         }else if(e instanceof DeleteException){
             result.setState(6008);

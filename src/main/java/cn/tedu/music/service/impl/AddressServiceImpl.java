@@ -63,7 +63,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     @Transactional
-    public void setDefault(Integer aid, Integer uid, String username) throws AddressNotFoundException, AddressDeniedException, UpdateException {
+    public void setDefault(Integer aid, Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, UpdateException {
         //根据aid查找地址信息
         Address address=findByAid(aid);
         //用户地址不存在抛出异常
@@ -72,7 +72,7 @@ public class AddressServiceImpl implements IAddressService {
         }
         //根据地址查出用户id,查出的id于当前登录用户的id不一致 抛出异常
         if(!uid.equals(address.getUid())){
-            throw new AddressDeniedException("拒绝修改他人数据");
+            throw new AccessDeniedException("拒绝修改他人数据");
         }
         //将用户所有地址设为非默认
         updateNonDefault(uid);
@@ -82,7 +82,7 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public void delete(Integer aid, Integer uid, String username) throws AddressNotFoundException, AddressDeniedException, DeleteException {
+    public void delete(Integer aid, Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, DeleteException {
         //验证地址是否存在
         Address address=findByAid(aid);
         if(address==null){
@@ -90,7 +90,7 @@ public class AddressServiceImpl implements IAddressService {
         }
         //验证数据归属
         if(!address.getUid().equals(uid)){
-            throw new AddressDeniedException("拒绝修改他人数据");
+            throw new AccessDeniedException("拒绝修改他人数据");
         }
         //删除地址
         deleteByAid(aid);
@@ -109,6 +109,10 @@ public class AddressServiceImpl implements IAddressService {
         updateDefault(result.getAid(),username,new Date());
     }
 
+    @Override
+    public Address getByAid(Integer aid) {
+        return findByAid(aid);
+    }
 
     @Override
     public List<Address> getByUid(Integer uid) {

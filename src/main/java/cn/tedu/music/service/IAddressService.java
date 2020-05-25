@@ -33,10 +33,10 @@ public interface IAddressService {
      * @param uid 用户地址
      * @param username 用户名
      * @throws AddressNotFoundException 地址不存在
-     * @throws AddressDeniedException 拒绝修改他人信息
+     * @throws AccessDeniedException 拒绝修改他人信息
      * @throws UpdateException 更新失败
      */
-    void setDefault(Integer aid,Integer uid,String username) throws AddressNotFoundException,AddressDeniedException, UpdateException;
+    void setDefault(Integer aid,Integer uid,String username) throws AddressNotFoundException, AccessDeniedException, UpdateException;
 
     /**
      * 删除地址
@@ -44,8 +44,16 @@ public interface IAddressService {
      * @param uid
      * @param username
      * @throws AddressNotFoundException
-     * @throws AddressDeniedException
+     * @throws AccessDeniedException
      * @throws DeleteException 删除失败
      */
-    void delete(Integer aid,Integer uid,String username)throws AddressNotFoundException,AddressDeniedException,DeleteException;
+    void delete(Integer aid,Integer uid,String username)throws AddressNotFoundException, AccessDeniedException,DeleteException;
+
+    /**
+     * 查找对应地址
+     * @param aid
+     * @return 地址信息
+     */
+    Address getByAid(Integer aid);
+
 }

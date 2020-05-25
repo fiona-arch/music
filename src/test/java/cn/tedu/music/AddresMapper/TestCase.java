@@ -3,7 +3,7 @@ package cn.tedu.music.AddresMapper;
 import cn.tedu.music.entity.Address;
 import cn.tedu.music.mapper.AddressMapper;
 import cn.tedu.music.service.IAddressService;
-import cn.tedu.music.service.ex.AddressDeniedException;
+import cn.tedu.music.service.ex.AccessDeniedException;
 import cn.tedu.music.service.ex.AddressNotFoundException;
 import cn.tedu.music.service.ex.DeleteException;
 import cn.tedu.music.service.ex.UpdateException;
@@ -82,9 +82,9 @@ public class TestCase {
 
     @Test
     public void testFindByAid(){
-        Integer aid=32;
+        Integer aid=16;
         Address address=mapper.findByAid(aid);
-        System.err.println(address.getUid());
+        System.err.println(address);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class TestCase {
             service.setDefault(aid,uid,username);
         } catch (AddressNotFoundException e) {
             System.err.println(e.getMessage());
-        } catch (AddressDeniedException e) {
+        } catch (AccessDeniedException e) {
             System.err.println(e.getMessage());
         } catch (UpdateException e) {
             System.err.println(e.getMessage());
@@ -134,7 +134,7 @@ public class TestCase {
             service.delete(aid,uid,username);
         } catch (AddressNotFoundException e) {
             System.err.println(e.getMessage());
-        } catch (AddressDeniedException e) {
+        } catch (AccessDeniedException e) {
             System.err.println(e.getMessage());
         } catch (DeleteException e) {
             System.err.println(e.getMessage());

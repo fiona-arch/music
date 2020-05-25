@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace对应的是那个接口 -->
+<mapper namespace="cn.tedu.music.mapper.OrderMapper">
+	<!-- Integer insertOrder(Order order);-->
+	<insert id="insertOrder" useGeneratedKeys="true" keyProperty="oid">
+		INSERT INTO
+			t_order(
+				uid, recv_name,
+            	recv_phone, recv_address,
+            	total_price, state,
+            	order_time, pay_time,
+            	create_user, create_time,
+            	modified_user, modified_time
+			)
+		VALUES (
+			  #{uid}, #{recvName},
+				#{recvPhone}, #{recvAddress},
+				#{totalPrice}, #{state},
+				#{orderTime}, #{payTime},
+				#{createUser}, #{createTime},
+				#{modifiedUser}, #{modifiedTime}
+		)
+	</insert>
+	<!-- Integer insertOrderItem(OrderItem orderItem) -->
+	<insert id="insertOrderItem"
+			useGeneratedKeys="true"
+			keyProperty="id">
+        INSERT INTO t_order_item (
+            oid, gid,
+            title, image,
+            price, num,
+            create_user, create_time,
+            modified_user, modified_time
+        ) VALUES (
+            #{oid}, #{gid},
+            #{title}, #{image},
+            #{price}, #{num},
+            #{createUser}, #{createTime},
+            #{modifiedUser}, #{modifiedTime}
+        )
+    </insert>
+</mapper>
+
+
